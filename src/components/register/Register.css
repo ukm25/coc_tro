@@ -1,0 +1,53 @@
+.register-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-height: 66vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 16px;
+  background-image: url("../../images/background-login.jpg");
+  font-family: 'Arial';
+  margin-top: 10px;
+}
+
+.register-container .container-form-register {
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  -webkit-box-shadow: 0px 2px 64px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 2px 64px rgba(0, 0, 0, 0.2);
+  margin-left: 200px;
+}
+
+.register-container .logo {
+  width: 300px;
+}
+
+.register-container .register-label {
+  margin-top: 30px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.register-container .register-input {
+  width: 350px;
+  text-align: center;
+  font-size: 18px;
+  margin-left: 25px;
+}
+
+.register-container .register-input .ant-input-affix-wrapper {
+  height: 40px;
+}
+
+.register-container .ant-form-item {
+  text-align: center;
+}
+/*# sourceMappingURL=Register.css.map */

@@ -1,0 +1,49 @@
+//  @import '~antd/dist/antd.css'; 
+.login-container {
+    display: flex;
+    min-height: 66vh;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: #fe762c;
+    font-family: 'Arial';
+    margin-top: 10px;
+    background-image: url("../../images/background-login.jpg");
+    
+
+    .container-form-login {
+        width: 100%;
+        max-width: 400px;
+        background-color: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0px 2px 64px rgba(0, 0, 0, 0.2);
+        margin-left: 200px;
+    }
+
+    .logo {
+        width: 300px;
+        //margin-right: 200px;
+    }
+
+    .login-label {
+        margin-top: 30px;
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .login-input {
+        width: 350px;
+        text-align: center;
+        font-size: 18px;
+        margin-left: 25px;
+
+        .ant-input-affix-wrapper {
+            height: 40px;
+        }
+    }
+
+    .ant-form-item {
+        text-align: center;
+    }
+}

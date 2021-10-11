@@ -1,0 +1,40 @@
+.container-create-post {
+    background-image: url("../../images/background.jpg");
+    padding: 50px;
+
+    #post {
+        padding: 50px;
+        width: 800px;
+        background: white;
+        border-radius: 15px;
+        margin: auto;
+        font-family: "Bookman";
+        font-size: 21px;
+    }
+}
+.ant-form-horizontal {
+    background: white;
+    padding: 40px;
+    width: 800px;
+    border-radius: 15px;
+    margin: auto;
+    font-family: "Bookman";
+    font-size: 20px;
+}
+
+#span-title {
+    font-size: 30px;
+}
+
+#button {
+    text-align: center;
+
+    #button-back {
+        margin-right: 200px;
+    }
+}
+.checkbox-utilities {
+    .ant-checkbox-group-item {
+        width: 150px;
+    }
+}
