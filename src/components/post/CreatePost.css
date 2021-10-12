@@ -1,6 +1,9 @@
 .container-create-post {
-  background-image: url("../../images/background.jpg");
   padding: 50px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .container-create-post #post {
@@ -9,7 +12,6 @@
   background: white;
   border-radius: 15px;
   margin: auto;
-  font-family: "Bookman";
   font-size: 21px;
 }
 
@@ -19,7 +21,6 @@
   width: 800px;
   border-radius: 15px;
   margin: auto;
-  font-family: "Bookman";
   font-size: 20px;
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Checkbox, Button, Slider } from "antd";
 
-const UploadImage = React.lazy(() => import("./UpdateImage"));
+// const UploadImage = React.lazy(() => import("./UpdateImage"));
 
 function DetailInformation(props) {
     const roomType = props.roomType;

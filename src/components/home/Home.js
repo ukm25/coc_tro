@@ -1,4 +1,5 @@
 import React from 'react';
+import HeaderCommon from '../commons/HeaderCommon';
 
 Home.propTypes = {
     
@@ -7,7 +8,7 @@ Home.propTypes = {
 function Home(props) {
     return (
         <div>
-            Home
+            {/* <HeaderCommon /> */}
         </div>
     );
 }

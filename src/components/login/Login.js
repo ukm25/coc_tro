@@ -1,87 +1,92 @@
-import React from "react";
 import "./Login.css";
-import { Form, Input, Button, Image } from "antd";
+import { createCurrentAccount } from "../commons/Utils";
+
+//react start
+import React from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+//react end
+
+//antd start
+import { Form, Input, Button, Image, Typography } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
+//antd end
 
-function Login(props) {
+//firebase start
+import fireStore from "../../firebase/Firebase";
+import { onSnapshot, collection } from "firebase/firestore";
+import HeaderCommon from "../commons/HeaderCommon";
+//firebase end
+
+const { Title } = Typography;
+function Login() {
   let history = useHistory();
+  const [accounts, setAccounts] = useState([]);
+
+  useEffect(
+    () =>
+      onSnapshot(collection(fireStore, "accounts"), (snapshot) => {
+        setAccounts(snapshot.docs.map((doc) => doc.data()));
+      }),
+    []
+  );
+
   const onFinish = (values) => {
-    // localStorage.clear();
-
-    // console.log(localStorage);
-
-
-    // let accounts1 = [];
-    // accounts1[0] = ["quang251199@gmail.com", "123456"];
-    // localStorage.setItem("accounts", JSON.stringify(accounts1));
-
-    // var storedNames = JSON.parse(localStorage.getItem("names"));
-    // storedNames.forEach(name => {
-    //   if(name[0] === "quang") {
-    //     console.log("ngon")
-    //   }
-    // });
-    // console.log(storedNames)
-    
-    
-    let accounts = JSON.parse(window.localStorage.getItem("accounts"));
-    accounts.forEach((account) => {
-      if (account[0] === values["Email"]) {
-        //have account
-        if (account[1] === values["Mật khẩu"]) {
-          //password correct
-          alert("Đăng nhập thành công!");
-          window.localStorage.setItem("currentAccount", account[0]);
-          props.setCurrentAccount(window.localStorage.getItem("currentAccount"));
-          history.push("/home");
-        } else {
-          //password wrong
-          alert("Mật khẩu không chính xác!");
-        }
+    let accountsTmp = accounts.filter(
+      (account) => account.email === values["Email"]
+    );
+    if (accountsTmp.length === 0) {
+      //email wrong
+      alert("Tài khoản không tồn tài");
+    } else {
+      accountsTmp = accountsTmp.filter(
+        (account) => account.password === values["Mật khẩu"]
+      );
+      if (accountsTmp.length === 0) {
+        //password wrong
+        alert("Mật khẩu không chính xác");
       } else {
-        //don't have account
-        alert("Không tồn tại tài khoản này!");
+        //login success
+        alert("Đăng nhập thành công");
+
+        //add account to currentAccount
+        createCurrentAccount(
+          accountsTmp[0].email,
+          accountsTmp[0].fullname,
+          accountsTmp[0].password
+        );
+        history.push("/home");
       }
-    });
+    }
   };
 
-  // const onFinishFailed = (errorInfo: any) => {
-
-  // };
-
   return (
+    <>
+    {/* <HeaderCommon/> */}
     <div className="login-container">
       <Image
         className="logo"
         src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
       />
-      <div className="container-form-login">
-        <Form
+      <Form
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          // onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item>
-            <div className="login-label">
-              <span>Đăng nhập</span>
-            </div>
+          <Form.Item name="title">
+            <Title>Đăng nhập</Title>
           </Form.Item>
+
           <Form.Item name="Email" rules={[]}>
-            <div className="login-input">
-              <Input prefix={<MailOutlined />} placeholder="Email" />
-            </div>
+            <Input prefix={<MailOutlined />} placeholder="Email" />
           </Form.Item>
 
           <Form.Item name="Mật khẩu" rules={[]}>
-            <div className="login-input">
-              <Input
-                prefix={<LockOutlined />}
-                type="password"
-                placeholder="Mật khẩu"
-              />
-            </div>
+            <Input
+              prefix={<LockOutlined />}
+              type="password"
+              placeholder="Mật khẩu"
+            />
           </Form.Item>
 
           <Form.Item>
@@ -90,13 +95,13 @@ function Login(props) {
             </Button>
           </Form.Item>
           <Form.Item>
-            <p>
-              Chưa có tài khoản?<a href="/register"> Đăng ký ngay</a>
-            </p>
+            Chưa có tài khoản?<a href="/register"> Đăng ký ngay</a>
           </Form.Item>
         </Form>
-      </div>
+      
     </div>
+    </>
+    
   );
 }
 
