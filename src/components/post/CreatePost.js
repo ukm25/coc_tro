@@ -1,8 +1,12 @@
 import "./CreatePost.css";
 import React, { useState, Suspense } from "react";
-
+import { useHistory } from "react-router-dom";
 import DetailInformation from "./DetailInformation";
 import PostInformation from "./PostInformation";
+
+import { Modal } from "antd";
+
+
 const CommonInformation = React.lazy(() => import("./CommonInformation"));
 
 function CreatePost(props) {
@@ -135,6 +139,8 @@ function CreatePost(props) {
   const [area, setArea] = useState(0);
   //room area -end
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const nextBack = function (visit) {
     if (visit === "detail-information") {
       setFormShow("detail-information");
@@ -233,9 +239,20 @@ function CreatePost(props) {
       />
     );
   };
+
+  let history = useHistory();
+
   return (
     <div>
-      <Suspense fallback={<p>Loading...</p>}>{changeForm(formShow)}</Suspense>
+      <Suspense fallback={<p>Loading...</p>}>
+        <div class="modal" style={{ display: "block" }}>
+          <div class="modal-content">
+            <span class="close" onClick={() => history.push("/information")}>×</span>
+            {changeForm(formShow)}
+          </div>
+        </div>
+      </Suspense>
+      
     </div>
   );
 }

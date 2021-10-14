@@ -94,15 +94,22 @@ function HeaderCommon() {
           type="horizontal"
           style={{ minWidth: 0, display: "flex" }}
         >
-          <Menu.Item style={{ display: "inline-flex" }} key="create-new-post">
-            <Avatar size={25} icon="user" style={{ marginRight: 5 }} />
+          <Menu.Item style={{ display: "inline-flex" }} key="Home-Search">
+            <Link to="/home">
+              <Avatar
+                size="50"
+                src="https://scontent.fhan5-7.fna.fbcdn.net/v/t1.6435-9/148236035_431288688121126_7347836499274082866_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=q2UzOGjWIq8AX8Z1B9F&_nc_ht=scontent.fhan5-7.fna&oh=f7dca890ee6a507f26b2d85992e9b46a&oe=618CCC0F"
+                // style={{ marginRight: 5 }}
+              />
+            </Link>
+          </Menu.Item>
+          <Menu.Item style={{ display: "inline-flex" }}>
             <Input
               prefix={<SearchOutlined />}
               placeholder="Tìm kiếm trên Cóc Trọ"
-              style={{ borderRadius: 16, width:200 }}
+              // style={{ borderRadius: 16, width: 200 }}
             />
           </Menu.Item>
-          
         </Divider>
         {/* <Divider orientation="center" key="divider-center">Khuyến mãiTrang chủ</Divider> */}
         <Divider orientation="right" key="divider-right">
@@ -115,8 +122,10 @@ function HeaderCommon() {
                 style={{ display: "inline-flex", height: 30 }}
               >
                 <Link to="/information">
-                  <Button style={{ borderRadius: 16 }}>
-                    <Avatar size={25} icon="user" style={{ marginRight: 5 }} />
+                  <Button>
+                    <Avatar
+                      src="https://scontent.fhan5-7.fna.fbcdn.net/v/t1.6435-9/148236035_431288688121126_7347836499274082866_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=q2UzOGjWIq8AX8Z1B9F&_nc_ht=scontent.fhan5-7.fna&oh=f7dca890ee6a507f26b2d85992e9b46a&oe=618CCC0F"
+                    />
                     {currentAccount[0].fullname}
                   </Button>
                 </Link>
@@ -125,14 +134,14 @@ function HeaderCommon() {
               <Menu.Item style={{ display: "inline-flex" }}>
                 <Dropdown overlay={menuMessage} trigger={["click"]}>
                   <Button style={{ borderRadius: 16 }}>
-                    <MessageTwoTone style={{ fontSize: "150%" }} />
+                    <MessageTwoTone />
                   </Button>
                 </Dropdown>
               </Menu.Item>
               <Menu.Item style={{ display: "inline-flex" }}>
                 <Dropdown overlay={menuNotification} trigger={["click"]}>
-                  <Button style={{ borderRadius: 16 }}>
-                    <NotificationTwoTone style={{ fontSize: "150%" }} />
+                  <Button>
+                    <NotificationTwoTone />
                   </Button>
                 </Dropdown>
               </Menu.Item>
@@ -146,11 +155,11 @@ function HeaderCommon() {
           >
             {currentAccount.length === 0 ? (
               <Link to="/login">
-                <Button style={{ borderRadius: 16 }}>Đăng nhập</Button>
+                <Button>Đăng nhập</Button>
               </Link>
             ) : (
               <Link to="/home" onClick={() => deleteCurrentAccount()}>
-                <Button style={{ borderRadius: 16 }}>Đăng xuất</Button>
+                <Button>Đăng xuất</Button>
               </Link>
             )}
           </Menu.Item>
@@ -158,13 +167,12 @@ function HeaderCommon() {
       </Menu>
       <Suspense
         key="suspense"
-        style={{}}
         fallback={<Spin indicator={antIcon} key="spin" />}
       >
         <Switch orientation="right" key="switch">
           <Route key="home" path="/home" component={Home} />
           <Route key="login" path="/login" component={Login} />
-          
+
           <Route
             key="information"
             path="/information"
@@ -174,10 +182,6 @@ function HeaderCommon() {
           {/* <Route path="/:somestring" component={Error} /> */}
         </Switch>
       </Suspense>
-      {/* <Content
-        className="site-layout"
-        style={{ padding: "0 50px", marginTop: 64 }}
-      ></Content> */}
     </Router>
   );
 }

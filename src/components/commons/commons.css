@@ -1,7 +1,94 @@
-.ant-divider-with-text-right {
-  text-align: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+.ant-menu-light {
+  max-height: 55px;
+}
+
+.ant-menu-light .ant-divider-with-text-right {
+  height: 100%;
+  margin: 0;
+}
+
+.ant-menu-light .ant-divider-with-text-right .ant-divider-inner-text {
+  margin-top: 10px;
+}
+
+.ant-menu-light .ant-divider-with-text-right .ant-divider-inner-text .ant-menu-item-only-child {
+  border-radius: 50px;
+  margin-right: 5px;
+  height: 100%;
+}
+
+.ant-menu-light .ant-divider-with-text-right .ant-divider-inner-text .ant-menu-item-only-child .ant-menu-title-content {
+  border-radius: 50px;
+  height: 100%;
+}
+
+.ant-menu-light .ant-divider-with-text-right .ant-divider-inner-text .ant-menu-item-only-child .ant-menu-title-content .ant-btn {
+  border-radius: 16px;
+  padding-top: 0;
+  background-color: #f0f2f5;
+  padding: 0;
+}
+
+.ant-menu-light .ant-divider-with-text-right .ant-divider-inner-text .ant-menu-item-only-child .ant-menu-title-content .ant-btn .ant-avatar-image {
+  margin-right: 5px;
+}
+
+.ant-menu-light .ant-divider-with-text-right .ant-divider-inner-text .ant-menu-item-only-child .ant-menu-title-content .ant-dropdown-trigger {
+  border-radius: 50px;
+  height: 35px;
+  width: 35px;
+  padding: 0;
+}
+
+.ant-menu-light .ant-divider-with-text-right .ant-divider-inner-text .login_logout_button {
+  padding: 0;
+  border-radius: 16px;
+}
+
+.ant-menu-light .ant-divider-with-text-right .ant-divider-inner-text .login_logout_button .ant-btn {
+  border-radius: 16px;
+  height: 35px;
+}
+
+.ant-menu-light .ant-divider-with-text-right .ant-divider-inner-text .ant-input-affix-wrapper {
+  width: 200px;
+  border-radius: 16px;
+}
+
+.ant-menu-light .ant-divider-with-text-right .ant-divider-inner-text .ant-menu-item-only-child {
+  padding: 0;
+  height: 35px;
+}
+
+.ant-menu-light .ant-divider-with-text-left {
+  height: 100%;
+  margin-top: 10px;
+}
+
+.ant-menu-light .ant-divider-with-text-left .ant-divider-inner-text {
+  padding: 0;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin-left: 20px;
+  margin-top: 0;
+  height: 55px;
+}
+
+.ant-menu-light .ant-divider-with-text-left .ant-divider-inner-text .ant-menu-item-active {
+  padding: 0;
+  height: 100%;
+}
+
+.ant-menu-light .ant-divider-with-text-left .ant-divider-inner-text .ant-menu-item-active .ant-avatar-image {
+  height: 35px;
+  width: 35px;
+}
+
+.ant-menu-light .ant-divider-with-text-left .ant-divider-inner-text .ant-menu-item-active .ant-input-affix-wrapper {
+  margin-left: 10px;
+  border-radius: 16px;
+  height: 35px;
+  width: 230px;
 }
 /*# sourceMappingURL=commons.css.map */

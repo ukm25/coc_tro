@@ -1,31 +1,26 @@
+import "./Information.css";
+
+//react start
 import React, { useState, useEffect, Suspense } from "react";
-import PropTypes from "prop-types";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+//react end
+
 import Introduce from "./Introduce";
 import ManagerPost from "./ManagerPost";
 import CreatePost from "../post/CreatePost";
 
-import fireStore from "../../firebase/Firebase";
-import { onSnapshot, collection } from "firebase/firestore";
-
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-
-import { Menu, Spin, Modal } from "antd";
+//antd start
+import { Menu, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-Information.propTypes = {};
+//antd end
+
+import storage from "../../firebase/Firebase";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin key="loading" />;
 
 function Information(props) {
-  const [currentAccount, setCurrentAccount] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  useEffect(
-    () =>
-      onSnapshot(collection(fireStore, "currentAccount"), (snapshot) => {
-        setCurrentAccount(snapshot.docs.map((doc) => doc.data()));
-      }),
-    []
-  );
+  // const link = storage.child(`anhbia.jpg`).getDownloadURL();
   return (
     <div
       className="site-layout-background"
@@ -46,8 +41,10 @@ function Information(props) {
           backgroundColor: "red",
         }}
       >
-        Header
+        {/* <image src={link}/> */}
       </div>
+
+
       <Router key="router-information">
         <Menu
           mode="horizontal"
@@ -55,17 +52,9 @@ function Information(props) {
           style={{ height: 70, justifyContent: "center" }}
         >
           <Menu.Item style={{ display: "inline-flex" }} key="create-new-post">
-            <Link to="create-new-post" key="link-create-new-post" onClick={() => setIsModalVisible(true)}>
+            <Link to="create-new-post" key="link-create-new-post">
               Tạo bài đăng
             </Link>
-            <Modal
-              title="Basic Modal"
-              visible={isModalVisible}
-            >
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-            </Modal>
           </Menu.Item>
           <Menu.Item style={{ display: "inline-flex" }} key="manager-post">
             <Link to="manager-post" key="link-manager-post">
@@ -74,7 +63,7 @@ function Information(props) {
           </Menu.Item>
           <Menu.Item style={{ display: "inline-flex" }} key="introduce">
             <Link to="introduce" key="link-introduce">
-              Giới thiệu
+            Chỉnh sửa thông tin
             </Link>
           </Menu.Item>
         </Menu>
@@ -85,14 +74,14 @@ function Information(props) {
         >
           <Switch orientation="right" key="switch">
             <Route
-              key="create-new-post"
-              path="/create-new-post"
-              component={CreatePost}
-            />
-            <Route
               key="manager-post"
               path="/manager-post"
               component={ManagerPost}
+            />
+            <Route
+              key="create-new-post"
+              path="/create-new-post"
+              component={CreatePost}
             />
             <Route key="introduce" path="/introduce" component={Introduce} />
           </Switch>
