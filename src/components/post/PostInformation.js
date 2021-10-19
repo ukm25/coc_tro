@@ -12,7 +12,7 @@ function PostInformation(props) {
         name="post"
         onFinish={props.onFinish}
       >
-        <span id="span-title">Thông tin bài đăng:</span>
+        <span style={{ fontSize:30 }}>Thông tin bài đăng:</span>
         <br />
         <br />
         <br />

@@ -1,5 +1,5 @@
 import React from 'react';
-import HeaderCommon from '../commons/HeaderCommon';
+import HeaderCommon from './commons/HeaderCommon';
 
 Home.propTypes = {
     

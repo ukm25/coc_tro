@@ -1,4 +1,3 @@
-import "./commons.css";
 import { deleteCurrentAccount } from "./Utils";
 
 //react start
@@ -7,16 +6,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 //react end
 
 //antd start
-import {
-  Menu,
-  Divider,
-  Spin,
-  Layout,
-  Dropdown,
-  Button,
-  Avatar,
-  Input,
-} from "antd";
+import { Menu, Spin, Dropdown, Button, Avatar, Input, Col, Row } from "antd";
 import {
   LoadingOutlined,
   MessageTwoTone,
@@ -26,34 +16,31 @@ import {
 //antd end
 
 //firebase start
-import fireStore from "../../firebase/Firebase";
+import fireStore from "./Firebase";
 import { onSnapshot, collection } from "firebase/firestore";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 //firebase end
 
-const { SubMenu } = Menu;
-const { Content } = Layout;
-
-const Login = React.lazy(() => import("../login/Login"));
-const CreatePost = React.lazy(() => import("../post/CreatePost"));
-// const Error = React.lazy(() => import("./Error"));
-const Register = React.lazy(() => import("../register/Register"));
-const Home = React.lazy(() => import("../home/Home"));
-const Information = React.lazy(() =>
-  import("../informationAccount/Information")
-);
+const Login = React.lazy(() => import("../Login"));
+const Register = React.lazy(() => import("../Register"));
+const Home = React.lazy(() => import("../Home"));
+const Information = React.lazy(() => import("../Information"));
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin key="loading" />;
 
 function HeaderCommon() {
   const [currentAccount, setCurrentAccount] = useState([]);
+  const [linkLogo, setLinkLogo] = useState([]);
+  useEffect(() => {
+    onSnapshot(collection(fireStore, "currentAccount"), (snapshot) => {
+      setCurrentAccount(snapshot.docs.map((doc) => doc.data()));
+    });
 
-  useEffect(
-    () =>
-      onSnapshot(collection(fireStore, "currentAccount"), (snapshot) => {
-        setCurrentAccount(snapshot.docs.map((doc) => doc.data()));
-      }),
-    []
-  );
+    const storage = getStorage();
+    getDownloadURL(ref(storage, "local/logo.jpg")).then((url) => {
+      setLinkLogo(url);
+    });
+  }, []);
 
   const menuMessage = (
     <Menu>
@@ -86,85 +73,170 @@ function HeaderCommon() {
       <Menu
         mode="horizontal"
         key="menu-header"
-        style={{ height: 70, justifyContent: "center" }}
+        style={{ maxHeight: 55, justifyContent: "center", width: "100%" }}
       >
-        <Divider
-          key="divider-left"
-          orientation="left"
-          type="horizontal"
-          style={{ minWidth: 0, display: "flex" }}
-        >
-          <Menu.Item style={{ display: "inline-flex" }} key="Home-Search">
-            <Link to="/home">
-              <Avatar
-                size="50"
-                src="https://scontent.fhan5-7.fna.fbcdn.net/v/t1.6435-9/148236035_431288688121126_7347836499274082866_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=q2UzOGjWIq8AX8Z1B9F&_nc_ht=scontent.fhan5-7.fna&oh=f7dca890ee6a507f26b2d85992e9b46a&oe=618CCC0F"
-                // style={{ marginRight: 5 }}
-              />
-            </Link>
-          </Menu.Item>
-          <Menu.Item style={{ display: "inline-flex" }}>
-            <Input
-              prefix={<SearchOutlined />}
-              placeholder="Tìm kiếm trên Cóc Trọ"
-              // style={{ borderRadius: 16, width: 200 }}
-            />
-          </Menu.Item>
-        </Divider>
-        {/* <Divider orientation="center" key="divider-center">Khuyến mãiTrang chủ</Divider> */}
-        <Divider orientation="right" key="divider-right">
-          {currentAccount.length === 0 ? (
-            <Link to="" key="null"></Link>
-          ) : (
-            <>
-              <Menu.Item
-                key="account-information"
-                style={{ display: "inline-flex", height: 30 }}
+        <Row style={{ width: "100%" }}>
+          <Col
+            xs={{ span: 12, offset: 0 }}
+            sm={{ span: 12, offset: 0 }}
+            md={{ span: 10, offset: 0 }}
+            lg={{ span: 8, offset: 0 }}
+            xl={{ span: 6, offset: 0 }}
+            xxl={{ span: 4, offset: 0 }}
+          >
+            <Row>
+              <Col
+                xs={{ span: 1, offset: 1 }}
+                sm={{ span: 1, offset: 1 }}
+                md={{ span: 1, offset: 1 }}
+                lg={{ span: 2, offset: 2 }}
+                xl={{ span: 2, offset: 2 }}
+                xxl={{ span: 2, offset: 2 }}
               >
-                <Link to="/information">
-                  <Button>
-                    <Avatar
-                      src="https://scontent.fhan5-7.fna.fbcdn.net/v/t1.6435-9/148236035_431288688121126_7347836499274082866_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=q2UzOGjWIq8AX8Z1B9F&_nc_ht=scontent.fhan5-7.fna&oh=f7dca890ee6a507f26b2d85992e9b46a&oe=618CCC0F"
-                    />
-                    {currentAccount[0].fullname}
+                <Menu.Item
+                  style={{ display: "inline-flex", padding: 0 }}
+                  key="Home-Search"
+                >
+                  <Link to="/home">
+                    <Avatar src={linkLogo} size={"100%"} />
+                  </Link>
+                </Menu.Item>
+              </Col>
+              <Col xs={{ span: 20, offset: 2 }}
+                sm={{ span: 20, offset: 2 }}
+                md={{ span: 20, offset: 2 }}
+                lg={{ span: 18, offset: 2 }}
+                xl={{ span: 18, offset: 2 }}
+                xxl={{ span: 18, offset: 2 }}>
+                <Menu.Item style={{ display: "inline-flex", padding: 0 }}>
+                  <Input
+                    prefix={<SearchOutlined style={{ marginRight: 10 }} />}
+                    placeholder="Tìm kiếm trên Cóc Trọ"
+                    size={"100%"}
+                    style={{
+                      borderRadius: 16,
+                      // width: 230,
+                      // height: 35,
+                      // marginLeft: 10,
+                    }}
+                  />
+                </Menu.Item>
+              </Col>
+            </Row>
+          </Col>
+          <Col xs={{ span: 12, offset: 0 }}
+            sm={{ span: 12, offset: 0 }}
+            md={{ span: 10, offset: 4 }}
+            lg={{ span: 8, offset: 8}}
+            xl={{ span: 6, offset: 12 }}
+            xxl={{ span: 4, offset: 16 }}>
+            {currentAccount.length === 0 ? (
+              <Link to="" key="null"></Link>
+            ) : (
+              <>
+                <Menu.Item
+                  key="account-information"
+                  style={{
+                    display: "inline-flex",
+                    height: 30,
+                    marginRight: 5,
+                    padding: 0,
+                  }}
+                >
+                  <Link to="/information">
+                    <Button
+                      style={{
+                        borderRadius: 16,
+                        backgroundColor: "#f0f2f5",
+                        padding: 0,
+                        paddingRight: 5,
+                        height: 35,
+                      }}
+                    >
+                      <Avatar
+                        src="https://scontent.fhan5-7.fna.fbcdn.net/v/t1.6435-9/148236035_431288688121126_7347836499274082866_n.jpg?_nc_cat=100&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=q2UzOGjWIq8AX8Z1B9F&_nc_ht=scontent.fhan5-7.fna&oh=f7dca890ee6a507f26b2d85992e9b46a&oe=618CCC0F"
+                        style={{ marginRight: 5 }}
+                      />
+                      {currentAccount[0].fullname}
+                    </Button>
+                  </Link>
+                </Menu.Item>
+
+                <Menu.Item
+                  style={{ display: "inline-flex", marginRight: 5, padding: 0 }}
+                >
+                  <Dropdown overlay={menuMessage} trigger={["click"]}>
+                    <Button
+                      style={{
+                        backgroundColor: "#f0f2f5",
+                        padding: 0,
+                        borderRadius: 50,
+                        height: 35,
+                        width: 35,
+                      }}
+                    >
+                      <MessageTwoTone />
+                    </Button>
+                  </Dropdown>
+                </Menu.Item>
+                <Menu.Item
+                  style={{ display: "inline-flex", marginRight: 5, padding: 0 }}
+                >
+                  <Dropdown overlay={menuNotification} trigger={["click"]}>
+                    <Button
+                      style={{
+                        backgroundColor: "#f0f2f5",
+                        padding: 0,
+                        borderRadius: 50,
+                        height: 35,
+                        width: 35,
+                      }}
+                    >
+                      <NotificationTwoTone />
+                    </Button>
+                  </Dropdown>
+                </Menu.Item>
+              </>
+            )}
+
+            <Menu.Item
+              key="login-logout"
+              style={{ display: "inline-flex", padding: 0 }}
+            >
+              {currentAccount.length === 0 ? (
+                <Link to="/login">
+                  <Button
+                    style={{
+                      paddingLeft: 5,
+                      borderRadius: 16,
+                      backgroundColor: "#f0f2f5",
+                      paddingRight: 5,
+                      height: 35,
+                    }}
+                  >
+                    Đăng nhập
                   </Button>
                 </Link>
-              </Menu.Item>
-
-              <Menu.Item style={{ display: "inline-flex" }}>
-                <Dropdown overlay={menuMessage} trigger={["click"]}>
-                  <Button style={{ borderRadius: 16 }}>
-                    <MessageTwoTone />
+              ) : (
+                <Link to="/home" onClick={() => deleteCurrentAccount()}>
+                  <Button
+                    style={{
+                      paddingLeft: 5,
+                      borderRadius: 16,
+                      backgroundColor: "#f0f2f5",
+                      paddingRight: 5,
+                      height: 35,
+                    }}
+                  >
+                    Đăng xuất
                   </Button>
-                </Dropdown>
-              </Menu.Item>
-              <Menu.Item style={{ display: "inline-flex" }}>
-                <Dropdown overlay={menuNotification} trigger={["click"]}>
-                  <Button>
-                    <NotificationTwoTone />
-                  </Button>
-                </Dropdown>
-              </Menu.Item>
-            </>
-          )}
-
-          <Menu.Item
-            key="login-logout"
-            className="login_logout_button"
-            style={{ display: "inline-flex" }}
-          >
-            {currentAccount.length === 0 ? (
-              <Link to="/login">
-                <Button>Đăng nhập</Button>
-              </Link>
-            ) : (
-              <Link to="/home" onClick={() => deleteCurrentAccount()}>
-                <Button>Đăng xuất</Button>
-              </Link>
-            )}
-          </Menu.Item>
-        </Divider>
+                </Link>
+              )}
+            </Menu.Item>
+          </Col>
+        </Row>
       </Menu>
+
       <Suspense
         key="suspense"
         fallback={<Spin indicator={antIcon} key="spin" />}

@@ -4,9 +4,6 @@ import { useHistory } from "react-router-dom";
 import DetailInformation from "./DetailInformation";
 import PostInformation from "./PostInformation";
 
-import { Modal } from "antd";
-
-
 const CommonInformation = React.lazy(() => import("./CommonInformation"));
 
 function CreatePost(props) {
@@ -40,10 +37,7 @@ function CreatePost(props) {
       },
     },
   };
-  //Post Type - Start
-  const [postType, setPostType] = useState("");
-  const valuePostType = ["Tìm ở ghép", "Cho thuê trọ"];
-  //Post Type - End
+  
   //Room Type - Start
   const [roomType, setRoomType] = useState("");
   const valueRoomType = [
@@ -136,10 +130,8 @@ function CreatePost(props) {
   const [fileList, setFileList] = useState([]);
   //image -end
   //room area - start
-  const [area, setArea] = useState(0);
+  const [area, setArea] = useState(20);
   //room area -end
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const nextBack = function (visit) {
     if (visit === "detail-information") {
@@ -159,9 +151,7 @@ function CreatePost(props) {
       return (
         <CommonInformation
           formItemLayout={formItemLayout}
-          valuePostType={valuePostType}
-          setPostType={setPostType}
-          postType={postType}
+          
           valueRoomType={valueRoomType}
           setRoomType={setRoomType}
           roomType={roomType}
@@ -243,18 +233,45 @@ function CreatePost(props) {
   let history = useHistory();
 
   return (
-    <div>
-      <Suspense fallback={<p>Loading...</p>}>
-        <div class="modal" style={{ display: "block" }}>
-          <div class="modal-content">
-            <span class="close" onClick={() => history.push("/information")}>×</span>
-            {changeForm(formShow)}
-          </div>
+    <Suspense fallback={<p>Loading...</p>}>
+      <div
+        style={{
+          display: "block",
+          position: "fixed",
+          paddingTop: 100,
+          left: 0,
+          top: 0,
+          width: "100%",
+          height: "100%",
+          overflow: "auto",
+          backgroundColor: "rgba(0, 0, 0, 0.4)",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "#fefefe",
+            margin: "auto",
+            padding: 20,
+            width: "50%",
+            borderRadius: 25,
+          }}
+        >
+          <span
+            style={{
+              color: "#aaaaaa",
+              float: "right",
+              fontSize: 28,
+              fontWeight: "bold",
+            }}
+            className="close"
+            onClick={() => history.push("/information")}
+          >
+            ×
+          </span>
+          {changeForm(formShow)}
         </div>
-      </Suspense>
-      
-    </div>
+      </div>
+    </Suspense>
   );
 }
-
 export default CreatePost;

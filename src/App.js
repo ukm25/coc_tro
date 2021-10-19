@@ -1,4 +1,5 @@
 import "./App.css";
+import 'antd/dist/antd.css';
 
 import HeaderCommon from "./components/commons/HeaderCommon";
 
