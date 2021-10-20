@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
 import {
   Form,
@@ -14,13 +14,29 @@ import {
 const Title = Typography;
 
 function CommonInformation(props) {
-  //Post Type - Start
-  const [postType, setPostType] = useState("");
-  const valuePostType = ["Tìm ở ghép", "Cho thuê trọ"];
-  //Post Type - End
+  let {
+    postType,
+    valuePostType,
+    setPostType,
+    valueRoomType,
+    setRoomType,
+    roomType,
+    roomName,
+    setRoomName,
+    numberRoomAvailable,
+    setNumberRoomAvailable,
+    numberPeoplePerRoom,
+    setNumberPeoplePerRoom,
+    area,
+    setArea,
+    valueGender,
+    setGender,
+    gender,
+    nextBack,
+  } = props;
 
   const onFinish = (value) => {
-    props.nextBack("detail-information");
+    nextBack("detail-information");
   };
 
   const titleMemo = useMemo(() => {
@@ -38,20 +54,20 @@ function CommonInformation(props) {
         label="Loại hình"
         rules={[
           {
-            required: true,
+            required: !postType,
             message: "Hãy chọn loại hình!",
           },
         ]}
       >
         <Radio.Group
           options={valuePostType}
-          onChange={(e) => {setPostType(e.target.value)}}
+          onChange={(e) => setPostType(e.target.value)}
           value={postType}
           defaultValue={postType}
         />
       </Form.Item>
     );
-  }, [postType, valuePostType]);
+  }, [postType, valuePostType, setPostType]);
 
   const roomTypeMemo = useMemo(() => {
     return (
@@ -60,23 +76,127 @@ function CommonInformation(props) {
         label="Loại phòng"
         rules={[
           {
-            required: true,
+            required: !roomType,
             message: "Hãy chọn loại phòng!",
           },
         ]}
       >
         <Radio.Group
-          options={props.valueRoomType}
-          onChange={(e) => props.setRoomType(e.target.value)}
-          value={props.roomType}
-          defaultValue={props.roomType}
+          options={valueRoomType}
+          onChange={(e) => setRoomType(e.target.value)}
+          value={roomType}
+          defaultValue={roomType}
         />
       </Form.Item>
     );
-  }, []);
+  }, [valueRoomType, setRoomType, roomType]);
 
+  const nameMemo = useMemo(() => {
+    return (
+      <Form.Item
+        name="name"
+        label="Tên trọ:"
+        rules={[
+          {
+            required: !roomName,
+            message: "Hãy nhập tên trọ",
+          },
+          // { ten tro phai co it nhat 1 ky tu chu cai
+          //   required: true,
+          //   message: "Hãy nhập tên trọ",
+          // },
+        ]}
+      >
+        <Row>
+          <Col span={15}>
+            <Input
+              value={roomName}
+              defaultValue={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+            />
+          </Col>
+        </Row>
+      </Form.Item>
+    );
+  }, [setRoomName, roomName]);
+
+  const numberRoomAvailableMemo = useMemo(() => {
+    return (
+      <Form.Item
+        name="numberRoomAvailable"
+        label="Số lượng phòng trống (đơn vị: phòng)"
+      >
+        <InputNumber
+          min={0}
+          value={numberRoomAvailable}
+          defaultValue={numberRoomAvailable}
+          onChange={(value) => setNumberRoomAvailable(value)}
+        />
+      </Form.Item>
+    );
+  }, [numberRoomAvailable, setNumberRoomAvailable]);
+
+  const numberPeoplePerRoomMemo = useMemo(() => {
+    return (
+      <Form.Item
+        name="numberPeoplePerRoom"
+        label="Sức chứa (đơn vị: người/phòng)"
+      >
+        <InputNumber
+          min={1}
+          value={numberPeoplePerRoom}
+          defaultValue={numberPeoplePerRoom}
+          onChange={(value) => setNumberPeoplePerRoom(value)}
+        />
+      </Form.Item>
+    );
+  }, [setNumberPeoplePerRoom, numberPeoplePerRoom]);
+
+  const areaMemo = useMemo(() => {
+    return (
+      <Form.Item name="area" label="Diện tích (đơn vị: m2):">
+        <InputNumber
+          min={0}
+          value={area}
+          defaultValue={area}
+          onChange={(value) => setArea(value)}
+        />
+      </Form.Item>
+    );
+  }, [area, setArea]);
+
+  const genderMemo = useMemo(() => {
+    return (
+      <Form.Item
+        name="gender"
+        label="Giới tính"
+        rules={[
+          {
+            required: !gender,
+            message: "Hãy chọn giới tính!",
+          },
+        ]}
+      >
+        <Radio.Group
+          options={valueGender}
+          onChange={(e) => setGender(e.target.value)}
+          value={gender}
+          defaultValue={gender}
+        />
+      </Form.Item>
+    );
+  }, [valueGender, setGender, gender]);
+
+  const buttonMemo = useMemo(() => {
+    return (
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Tiếp theo
+        </Button>
+      </Form.Item>
+    );
+  }, []);
   return (
-    // onClick={(e) => props.nextBack("detail-information")}
     <Row>
       <Col span={22} offset={1}>
         <Form {...props.formItemLayout} onFinish={(value) => onFinish(value)}>
@@ -92,109 +212,27 @@ function CommonInformation(props) {
           </Row>
 
           <Row>
-            <Col style={{ width: "100%" }}>
-              <Form.Item
-                name="name"
-                label="Tên trọ:"
-                rules={[
-                  {
-                    required: true,
-                    message: "Hãy nhập tên trọ",
-                  },
-                  // { ten tro phai co it nhat 1 ky tu chu cai
-                  //   required: true,
-                  //   message: "Hãy nhập tên trọ",
-                  // },
-                ]}
-              >
-                <Row>
-                  <Col span={15}>
-                    <Input
-                      value={props.roomName}
-                      defaultValue={props.roomName}
-                      onChange={(e) => props.setRoomName(e.target.value)}
-                    />
-                  </Col>
-                </Row>
-              </Form.Item>
-            </Col>
+            <Col style={{ width: "100%" }}>{nameMemo}</Col>
           </Row>
 
           <Row>
-            <Col style={{ width: "100%" }}>
-              <Form.Item
-                name="numberRoomAvailable"
-                label="Số lượng phòng trống (đơn vị: phòng)"
-              >
-                <InputNumber
-                  min={0}
-                  value={props.numberRoomAvailable}
-                  defaultValue={props.numberRoomAvailable}
-                  onChange={(value) => props.setNumberRoomAvailable(value)}
-                />
-              </Form.Item>
-            </Col>
+            <Col style={{ width: "100%" }}>{numberRoomAvailableMemo}</Col>
           </Row>
 
           <Row>
-            <Col style={{ width: "100%" }}>
-              <Form.Item
-                name="numberPeoplePerRoom"
-                label="Sức chứa (đơn vị: người/phòng)"
-              >
-                <InputNumber
-                  min={1}
-                  value={props.numberPeoplePerRoom}
-                  defaultValue={props.numberPeoplePerRoom}
-                  onChange={(value) => props.setNumberPeoplePerRoom(value)}
-                />
-              </Form.Item>
-            </Col>
+            <Col style={{ width: "100%" }}>{numberPeoplePerRoomMemo}</Col>
           </Row>
           <Row>
-            <Col style={{ width: "100%" }}>
-              <Form.Item name="area" label="Diện tích (đơn vị: m2):">
-                <InputNumber
-                  min={0}
-                  value={props.area}
-                  defaultValue={props.area}
-                  onChange={(value) => props.setArea(value)}
-                />
-              </Form.Item>
-            </Col>
+            <Col style={{ width: "100%" }}>{areaMemo}</Col>
           </Row>
 
           <Row>
-            <Col style={{ width: "100%" }}>
-              <Form.Item
-                name="gender"
-                label="Giới tính"
-                rules={[
-                  {
-                    required: true,
-                    message: "Hãy chọn giới tính!",
-                  },
-                ]}
-              >
-                <Radio.Group
-                  options={props.valueGender}
-                  onChange={(e) => props.setGender(e.target.value)}
-                  value={props.gender}
-                  defaultValue={props.gender}
-                />
-              </Form.Item>
-            </Col>
+            <Col style={{ width: "100%" }}>{genderMemo}</Col>
           </Row>
 
           <Row>
             <Col span={4} offset={10}>
-              <Button
-                type="primary"
-                // onClick={(e) => props.nextBack("detail-information")}
-                htmlType="submit"
-              >
-                Tiếp theo
-              </Button>
+              {buttonMemo}
             </Col>
           </Row>
         </Form>

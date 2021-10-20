@@ -1,6 +1,6 @@
-/* .checkbox-utilities .ant-checkbox-group-item {
-  width: 150px;
-} */
+.checkbox-utilities .ant-checkbox-group-item {
+  width: 100px;
+}
 
 .close:hover,
 .close:focus {

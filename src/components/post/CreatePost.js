@@ -1,10 +1,10 @@
 import "./CreatePost.css";
 import React, { useState, Suspense } from "react";
 import { useHistory } from "react-router-dom";
-import DetailInformation from "./DetailInformation";
-import PostInformation from "./PostInformation";
 
 const CommonInformation = React.lazy(() => import("./CommonInformation"));
+const DetailInformation = React.lazy(() => import("./DetailInformation"));
+const PostInformation = React.lazy(() => import("./PostInformation"));
 
 function CreatePost(props) {
   const formItemLayout = {
@@ -37,7 +37,10 @@ function CreatePost(props) {
       },
     },
   };
-  
+  //Post Type - Start
+  const [postType, setPostType] = useState("");
+  const valuePostType = ["Tìm ở ghép", "Cho thuê trọ"];
+  //Post Type - End
   //Room Type - Start
   const [roomType, setRoomType] = useState("");
   const valueRoomType = [
@@ -62,7 +65,7 @@ function CreatePost(props) {
   //Gender - End
 
   //Rent Price - Start
-  const [rentPrice, setRentPrice] = useState([0.5, 2]);
+  const [rentPrice, setRentPrice] = useState("");
   //Rent Price - End
   //Deposit - Start
   const [deposit, setDeposit] = useState("");
@@ -145,13 +148,15 @@ function CreatePost(props) {
     }
   };
 
-  const [formShow, setFormShow] = useState("common-information");
+  const [formShow, setFormShow] = useState("detail-information");
   const changeForm = (formShowTmp) => {
     if (formShowTmp === "common-information") {
       return (
         <CommonInformation
           formItemLayout={formItemLayout}
-          
+          valuePostType={valuePostType}
+          setPostType={setPostType}
+          postType={postType}
           valueRoomType={valueRoomType}
           setRoomType={setRoomType}
           roomType={roomType}
@@ -230,47 +235,28 @@ function CreatePost(props) {
     );
   };
 
+
   let history = useHistory();
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <div
-        style={{
-          display: "block",
-          position: "fixed",
-          paddingTop: 100,
-          left: 0,
-          top: 0,
-          width: "100%",
-          height: "100%",
-          overflow: "auto",
-          backgroundColor: "rgba(0, 0, 0, 0.4)",
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: "#fefefe",
-            margin: "auto",
-            padding: 20,
-            width: "50%",
-            borderRadius: 25,
-          }}
-        >
-          <span
-            style={{
-              color: "#aaaaaa",
-              float: "right",
-              fontSize: 28,
-              fontWeight: "bold",
-            }}
-            className="close"
-            onClick={() => history.push("/information")}
-          >
-            ×
-          </span>
-          {changeForm(formShow)}
-        </div>
-      </div>
+    <Suspense fallback={<p>Loading...</p>} style={{  }}>
+      <div style={{ display: "block", position:"fixed", paddingTop:100, left:0, top:0, width:"100%", height:"100%", overflow:"auto", backgroundColor:"rgba(0, 0, 0, 0.4)"  }}>
+            <div class="modal-content" style={{ backgroundColor: "#fefefe", margin:"auto", padding:20, width:"50%", borderRadius:25 }}>
+              <span
+                style={{
+                  color: "#aaaaaa",
+                  float: "right",
+                  fontSize: 28,
+                  fontWeight: "bold",
+                }}
+                className="close"
+                onClick={() => history.push("/information")}
+              >
+                ×
+              </span>
+              {changeForm(formShow)}
+            </div>
+          </div>
     </Suspense>
   );
 }
